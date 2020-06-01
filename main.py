@@ -34,8 +34,11 @@ async def bad_images(request):
     bad_image = data['bad_image']
     for fileName in os.listdir(os.getcwd() + '/data/eloc_dataset'):
         if fileName == bad_image:
-
-            shutil.copy(os.getcwd() + '/data/eloc_dataset/' + fileName, os.getcwd() + '/data/bad')
+            if os.path.exists(os.getcwd() + '/data/bad'):
+                shutil.copy(os.getcwd() + '/data/eloc_dataset/' + fileName, os.getcwd() + '/data/bad')
+            else:
+                os.mkdir(os.getcwd() + '/data/bad')
+                shutil.copy(os.getcwd() + '/data/eloc_dataset/' + fileName, os.getcwd() + '/data/bad')
 
     return JSONResponse({'status': 'ok'})
 
